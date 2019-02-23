@@ -1,0 +1,58 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        /**
+         * Build
+         */
+        {
+            "label": "Build:Run",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn": [ "Build:Compile" ],
+            "type": "process",
+            "command": "${workspaceFolder}/.build/${workspaceFolderBasename}.out",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
+            "label": "Build:Compile",
+            "group": "build",
+            "dependsOn": [ "Build:Standby" ],
+            "type": "shell",
+            "command": "cmake --build .build --target all -- -j 4",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
+            "label": "Build:Standby",
+            "group": "build",
+            "dependsOn": [],
+            "type": "shell",
+            "command": "cmake -H. -B.build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+    ]
+}
